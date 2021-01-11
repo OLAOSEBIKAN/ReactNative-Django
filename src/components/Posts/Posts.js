@@ -28,7 +28,7 @@ const Posts = () => {
 
 
 
-    gotToCreate = function () {
+    gotToCreate =  () => {
         navigation.navigate('Create Post')
 
     }
@@ -80,7 +80,7 @@ const Posts = () => {
                         />
 
                         <Button
-                            onPress={() => gotToCreate()}
+                            onPress={() => gotToCreate}
                             style={styles.button} title='Create Post' />
                     </View>
             }

@@ -1,6 +1,6 @@
 //import liraries
 import React, { Component, useState } from 'react';
-import { View, Text, StyleSheet, TextInput, TouchableOpacity, ActivityIndicator } from 'react-native';
+import { View, Text, StyleSheet, TextInput, Button } from 'react-native';
 
 
 // create a component
@@ -74,12 +74,10 @@ const RegisterForm = () => {
                             onChangeText={text => setPassword(text)}
                             secureTextEntry={true}
                             style={styles.input} />
-                        <TouchableOpacity
-                            style={styles.buttonContainer}
-                            disabled={!Username || !Email || !Password}
-                            onPress={() => registerApi()}>
-                            <Text style={styles.button}>Register</Text>
-                        </TouchableOpacity>
+                        <Button
+                            disabled={!Username || !Email||!Password}
+                            onPress={() => registerApi}
+                            style={styles.button} title='LOGIN' />
                     </View>
             }
         </View>
