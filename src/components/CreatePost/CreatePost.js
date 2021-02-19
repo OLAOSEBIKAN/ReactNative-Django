@@ -1,5 +1,5 @@
 //import liraries
-import React, { Component, useState } from 'react';
+import React, { Component, useState, useEffect } from 'react';
 import { View, Text, StyleSheet, TextInput, Button, Image } from 'react-native';
 import { useNavigation } from '@react-navigation/native';
 import base64 from 'react-native-base64'
@@ -25,14 +25,15 @@ const CreatePost = () => {
 
     goToPosts = () => navigation.navigate('Posts')
 
-    sendPost = function () {
-        
+    useEffect(()=> {
         store.get('username').then((res) => setUsername(res.usernameData))
         store.get('password').then((res) => setPassword(res.passwordData))
         store.get('author').then((res) => setAuthor(res.authorData))
         const getdateposted = new Date()
         setDatePosted(getdateposted.toISOString())
-        
+    }, [Author, Date_posted, username, password])
+
+    sendPost = function () {    
         setLoading(true);
         fetch(postUrl, {
             method: 'POST',

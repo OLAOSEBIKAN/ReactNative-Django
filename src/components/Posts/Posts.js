@@ -21,23 +21,22 @@ const Posts = () => {
     const navigation = useNavigation()
 
     gotToPost = function (id) {
-        store.save('PostID', {ID: id.toString()})
+        store.save('PostID', { ID: id.toString() })
         navigation.navigate('Post')
 
     }
 
 
 
-    gotToCreate =  () => {
+    gotToCreate = () => {
         navigation.navigate('Create Post')
 
     }
 
 
-    store.get("Username").then( res =>  setUsername(res.userName));
-    store.get("Password").then( res =>  setPassword(res.passWord));
-
     useEffect(() => {
+        store.get("Username").then(res => setUsername(res.userName));
+        store.get("Password").then(res => setPassword(res.passWord));
 
         try {
             fetch(postUrl, {
@@ -58,7 +57,7 @@ const Posts = () => {
             })
         }
         catch (error) { console.log(error) }
-    }, [!loading])
+    }, [loading, username, password])
 
     return (
         <SafeAreaView style={styles.container}>
@@ -73,7 +72,7 @@ const Posts = () => {
                             renderItem={({ item }) =>
                             (
                                 <TouchableOpacity onPress={() => gotToPost(item.id)}
-                                style={styles.touch}><Text style={styles.item}> {item.title}</Text></TouchableOpacity>
+                                    style={styles.touch}><Text style={styles.item}> {item.title}</Text></TouchableOpacity>
                             )
 
                             }

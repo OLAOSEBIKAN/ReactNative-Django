@@ -15,7 +15,6 @@ import {
   Text,
   StatusBar,
 } from 'react-native';
-import Login from './src/components/Login/Login'
 import BlogNavigator from './src/routes/navigator'
 
 import {

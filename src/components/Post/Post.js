@@ -1,6 +1,6 @@
 //import liraries
 import React, { Component, useEffect, useState } from 'react';
-import { View, Text, StyleSheet, FlatList, SafeAreaView } from 'react-native';
+import { View, Text, StyleSheet, SectionList, SafeAreaView } from 'react-native';
 import store from 'react-native-simple-store';
 import base64 from 'react-native-base64'
 
@@ -10,39 +10,38 @@ const Post = () => {
 
 
     const [loading, setLoading] = useState(true)
-    const [username, setUsername] = useState('')
-    const [password, setPassword] = useState('')
-    const [postId, setPostID] = useState(null)
-    const [infos, setInfos] = useState({})
+    const [infos, setInfos] = useState([])
+    const [ID, setID] = useState(0)
+    const [USERNAME, setUsername] = useState('')
+    const [PASSWORD, setPassword] = useState('')
 
- 
-    store.get("PostID").then( res =>  setPostID(res.ID));
-    store.get("Username").then( res =>  setUsername(res.userName));
-    store.get("Password").then( res =>  setPassword(res.passWord));
+
+    store.get("PostID").then(res => setID(res.ID));
+    store.get("Username").then(res => setUsername(res.userName));
+    store.get("Password").then(res => setPassword(res.passWord));
 
 
     useEffect(() => {
 
         try {
-            fetch('https://react-native-django-api-1.herokuapp.com/posts/' + postId, {
+            fetch('https://react-native-django-api-1.herokuapp.com/posts/' + ID, {
                 method: 'GET',
                 headers: {
                     'Accept': 'application/json',
                     'Content-Type': 'application/json',
-                    'Authorization': "Basic " + base64.encode(username + ':' + password)
+                    'Authorization': "Basic " + base64.encode(USERNAME + ':' + PASSWORD)
                 },
-            }).then((response) => response.json()
-            ).then(data => {
+            }).then((response) => response.json().then(data => {
                 setInfos(data)
                 console.log(data)
                 setLoading(false)
-            }).catch((error) => {
+            })).catch((error) => {
                 console.error(error.message)
                 setLoading(false)
             })
         }
         catch (error) { console.log(error) }
-    }, [!loading])
+    }, [loading, USERNAME, PASSWORD])
 
 
     return (
@@ -52,10 +51,12 @@ const Post = () => {
                     <View>
                         <Text>Loading...</Text>
                     </View> :
-                    <View style={styles.container2}>
-                        <FlatList data={infos}
-                        renderItem={({item}) => <Text>{item.title}, {item.content}</Text>}
-                        />
+                    <View>
+                        <Text>{infos.title}</Text>
+                        <Text>{infos.content}</Text>
+                        <Text>author {infos.author}</Text>
+                        <Text>{infos.date_posted}</Text>
+                        <Text>ID {infos.id}</Text>
                     </View>
             }
         </SafeAreaView>
@@ -69,15 +70,19 @@ const styles = StyleSheet.create({
         flex: 1,
         backgroundColor: 'hsla(40, 10%, 94%,1)',
     },
-    container2: {
-        flex: 1
-    },
+
     item: {
         paddingTop: 10,
         fontSize: 20,
     },
-    
+
 });
 
 //make this component available to the app
 export default Post;
+
+
+
+
+
+

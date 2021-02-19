@@ -3,7 +3,7 @@ import React, { Component, useState } from 'react';
 import { View, Text, StyleSheet, Image, Button } from 'react-native';
 import LoginForm from './LoginForm';
 import { useNavigation } from '@react-navigation/native';
-import SafeAreaView from 'react-native-safe-area-view';
+import SafeAreaView from 'react-native-safe-area-view';\/
 
 // create a component
 const Login = () => {
